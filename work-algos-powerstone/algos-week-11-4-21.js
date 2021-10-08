@@ -33,5 +33,32 @@ console.log(dontGiveMe5Dave(4, 20));
 
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
-// THURS
+// FRI
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+// Given a string of words, find the highest scoring word. 
+// Each letter scores according to it's position in the alphabet 
+// (a=1, b=2, c=3. etc...) If two words score the same, return 
+// the word that appears the earliest.
+
+
+
+var highestWord = function(myString) {
+    let myWords = myString.split(" ");
+    let topWordScore = 0;
+    let indexofWord = 0;
+    for(let i=0; i<myWords.length; i++){
+        let tempWordScore = 0;
+        for(let j=0; j<myWords[i].length; j++){
+            tempWordScore += myWords[i].toLowerCase().charCodeAt(j) - 96;
+        } if (tempWordScore > topWordScore){ 
+            topWordScore = tempWordScore;
+            indexofWord = i;
+        }
+    } return myWords[indexofWord]
+};
+
+
+console.log(highestWord("abc def hij"));
+console.log(highestWord("Man I need a taxi"));
+console.log(highestWord("I love to see volcanoes"));
