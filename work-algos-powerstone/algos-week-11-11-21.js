@@ -97,3 +97,84 @@ console.log(longestPalindrome(s = "cbbd")); // "bb"
 console.log(longestPalindrome(s = "a")); // "a"
 console.log(longestPalindrome(s = "ac")); // "a"
 // console.log(longestPalindrome()); // 
+
+
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
+// FRI
+// ------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+// 345. Reverse Vowels of a String
+// Given a string s, reverse only all the vowels in the string and return it.
+// The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both cases.
+
+var reverseString = function(s) {
+    let len = s.length;
+    for(var i=0; i< len/2; i++){
+        let temp = s[i];
+        s[i] = s[len-i-1];
+        s[len-i-1] = temp;
+    }
+    return s
+};
+
+var reverseVowels = function(s) {
+    let myVow = [] //keeps track of all values in string
+    let myVowIndexes = [] //keeps track of all the vowels indexes
+    let arr = s.split('') //converts string into an array to easily manipulate
+    let len = arr.length //records lenght of array so that a call is not made each for loop
+    let vowels = ['a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U']; // contains all upper and lower case vowels
+
+    // create log of all vowels in string and their index
+    for (let i=0; i<len; i++){
+        if (vowels.includes(arr[i])){
+            myVow.push(arr[i])
+            myVowIndexes.push(i)
+        }
+    }
+
+    //reverse the vowels
+    reverseString(myVow);
+
+    // put vowels back into original array from the string
+    for (let j=0; j<myVowIndexes.length; j++){
+        console.log("inside second for")
+        arr[myVowIndexes[j]] = myVow.shift();
+    }
+
+    //return array to string
+    s = arr.join('');
+
+    return s
+};
+
+const reverseVowelJeff = (string) => {
+    const lowerString = string.toLowerCase().split('');
+    const vowels = ['a', 'e', 'i', 'o', 'u'];
+    let vowelIndex = [];
+    //loop through string to find vowels and push their index to array
+    for (let i = 0; i < lowerString.length; i++) {
+        if(vowels.includes(lowerString[i])) {
+            vowelIndex.push(i);
+        }
+    }
+    //while i is less than half the lenght of vowelIndex swap vowels, if odd then use .floor to leave middle alone
+    let start = 0;
+    let end = vowelIndex.length - 1
+    let half = Math.floor(vowelIndex.length / 2);
+    //switch vowels
+    while (start < half) {
+        let temp = lowerString[vowelIndex[start]];
+        lowerString[vowelIndex[start]] = lowerString[vowelIndex[end]];
+        lowerString[vowelIndex[end]] = temp;
+        start++;
+        end--;
+    }
+    s = lowerString.join('');
+    return s
+}
+
+console.log(reverseVowelJeff(s = "hello")); // Output: "holle"
+console.log(reverseVowelJeff(s = "leetcode")); // Output: "leotcede"
+// console.log(reverseVowels()); // 
