@@ -51,8 +51,6 @@ console.log(maxArea([1,2,1])); // 2
 
 
 
-
-
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // WED
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -75,16 +73,18 @@ function isPalindrome(string) {
 }
 
 var longestPalindrome = function(s) {
-    let maxPal = "";
-    let maxPalCount = 0;
-    let len = s.length
+    let maxPal = ""; // keeps track of my final return value
+    let maxPalCount = 0; //keeps track of the length of my longest palindrome
+    let len = s.length //records lenght of array so that a call is not made each for loop - saves time
+
+    // two for loops to compare each start index with every possible substring
     for (let j = 0; j < len; j++) {
         for (let k = j+1; k <= len; k++) {
-            let tempPal = s.substring(j,k)
-            if (maxPalCount > s.substring(j,(len-1)).length) {return maxPal}
-            if (isPalindrome(tempPal) == true){
-                if (tempPal.length > maxPalCount) {
-                    maxPalCount = tempPal.length;
+            let tempPal = s.substring(j,k) // keeps track of the temporary substring to be used to compare to the max substring
+            if (maxPalCount > s.substring(j,(len-1)).length) {return maxPal} // this is to save time: is our current max palindrome already the longest possible string?
+            if (isPalindrome(tempPal) == true){ // using above algorith to check if it is a palindrome
+                if (tempPal.length > maxPalCount) { 
+                    maxPalCount = tempPal.length; // dont forget to set both the palindrom length and substring of final result
                     maxPal = tempPal;
                 }
             } 
@@ -100,6 +100,7 @@ console.log(longestPalindrome(s = "ac")); // "a"
 
 
 
+
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
 // FRI
 // ------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -109,6 +110,8 @@ console.log(longestPalindrome(s = "ac")); // "a"
 // Given a string s, reverse only all the vowels in the string and return it.
 // The vowels are 'a', 'e', 'i', 'o', and 'u', and they can appear in both cases.
 
+
+// Caleb's Version ---------------------------------------------------------------------------------------------------
 var reverseString = function(s) {
     let len = s.length;
     for(var i=0; i< len/2; i++){
@@ -149,6 +152,9 @@ var reverseVowels = function(s) {
     return s
 };
 
+
+
+// Jeff's Version ---------------------------------------------------------------------------------------------------
 const reverseVowelJeff = (string) => {
     const lowerString = string.toLowerCase().split('');
     const vowels = ['a', 'e', 'i', 'o', 'u'];
