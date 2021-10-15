@@ -149,7 +149,7 @@ var maxArea = function(height) {
             tempArea = ((j-i)*(Math.min(height[i], height[j])));
             if (tempArea > maxArea){
                 maxArea = tempArea;
-            }
+            }  
         }
     } return maxArea;
 };
@@ -159,3 +159,162 @@ console.log(maxArea([1,1])); // 1
 console.log(maxArea([4,3,2,1,4])); // 16
 console.log(maxArea([1,2,1])); // 2
 // console.log(maxArea()); // 
+
+
+
+
+
+// 189. Rotate Array
+// Given an array, rotate the array to the right by k steps, where k is non-negative.
+
+
+// exceeds time limit
+var rotate = function(nums, k) {
+    for (let i=0; i<k; i++){
+        nums.unshift(nums.pop())
+    }
+    return nums
+};
+
+// takes one portion, moves slice forward, populates values up to it
+var rotateV2 = function(nums, k) {
+    if(k >= nums.length){
+        k = k % nums.length;
+        if(k === 0){
+            return nums;
+        }
+    }
+    let temp = nums.slice(nums.length-k);
+    for(let j = nums.length-1; j>k-1; j--){
+        nums[j] = nums[j-k];
+    }
+    for(let i = 0; i< temp.length; i++){
+        nums[i] = temp[i];
+    }
+    return nums;
+};
+
+console.log(rotate(nums = [1,2,3,4,5,6,7], k = 3)); // [5,6,7,1,2,3,4]
+console.log(rotate(nums = [-1,-100,3,99], k = 2)); // [3,99,-1,-100]
+// console.log(rotate()); // 
+
+
+
+
+
+// 986. Interval List Intersections
+// You are given two lists of closed intervals, firstList and secondList, where 
+// firstList[i] = [starti, endi] and secondList[j] = [startj, endj]. Each list 
+// of intervals is pairwise disjoint and in sorted order. Return the intersection 
+// of these two interval lists. A closed interval [a, b] (with a <= b) denotes 
+// the set of real numbers x with a <= x <= b. The intersection of two closed 
+// intervals is a set of real numbers that are either empty or represented as 
+// a closed interval. For example, the intersection of [1, 3] and [2, 4] is [2, 3].
+
+
+var intervalIntersection = function(firstList, secondList) {
+    let i = 0, j = 0;
+    let arr = [];
+    
+    while (i<firstList.length && j<secondList.length){
+        let low = Math.max(firstList[i][0], secondList[j][0]);
+        let high = Math.min(firstList[i][1], secondList[j][1]);
+        if (low <= high) {
+            arr.push([low,high])
+        }
+        if (firstList[i][1] < secondList[j][1]) {
+            i++
+        } else {j++}
+    } return arr
+};
+
+
+console.log(intervalIntersection(firstList = [[0,2],[5,10],[13,23],[24,25]], secondList = [[1,5],[8,12],[15,24],[25,26]])); // [[1,2],[5,5],[8,10],[15,23],[24,24],[25,25]]
+console.log(intervalIntersection(firstList = [[1,3],[5,9]], secondList = [])); // []
+console.log(intervalIntersection(firstList = [], secondList = [[4,8],[10,12]])); // []
+console.log(intervalIntersection(firstList = [[1,7]], secondList = [[3,10]])); //  [[3,7]]
+// console.log(intervalIntersection()); // 
+
+
+
+var test = function(x, k) {
+    while (k--){
+        console.log(x[k])
+    }
+};
+
+test([1,2,3,4,5,6,7,8,9], 3)
+
+
+
+
+// 5. Longest Palindromic Substring
+// Given a string s, return the longest palindromic substring in s.
+
+function isPalindrome(string) {
+    for (let i = 0; i < string.length / 2; i++) {
+        if (string[i] == string[string.length - i - 1]) {
+            continue
+        }
+        else { return false }
+    }
+    return true
+}
+
+var longestPalindrome = function(s) {
+    let maxPal = "";
+    let maxPalCount = 0;
+    let len = s.length
+    for (let j = 0; j < len; j++) {
+        for (let k = j+1; k <= len; k++) {
+            let tempPal = s.substring(j,k)
+            if (maxPalCount > s.substring(j,(len-1)).length) {return maxPal}
+            if (isPalindrome(tempPal) == true){
+                if (tempPal.length > maxPalCount) {
+                    maxPalCount = tempPal.length;
+                    maxPal = tempPal;
+                }
+            } 
+        }
+    } return maxPal
+}
+
+console.log(longestPalindrome(s = "babad")); // "bab"
+console.log(longestPalindrome(s = "cbbd")); // "bb"
+console.log(longestPalindrome(s = "a")); // "a"
+console.log(longestPalindrome(s = "ac")); // "a"
+// console.log(longestPalindrome()); // 
+
+
+
+
+
+
+
+
+// 283. Move Zeroes
+// Given an integer array nums, move all 0's to the end of it while maintaining 
+// the relative order of the non-zero elements. Note that you must do this in-place 
+// without making a copy of the array.
+
+var moveZeroes = function(nums) {
+    let count = 0;
+    while (nums.indexOf(0) !== -1) {
+        let valIndex = nums.indexOf(0)
+        for (let i = valIndex; i < nums.length; i++) {
+            nums[i] = nums [i+1];
+        } 
+        nums.pop();
+        count++;
+    }
+    if (count !== 0){
+        for (var i = 0; i < count; i++){
+            nums.push(0)
+        }
+    }
+    return nums
+};
+
+console.log(moveZeroes(nums = [0,1,0,3,12])); // [1,3,12,0,0]
+console.log(moveZeroes(nums = [0])); // [0]
+// console.log(moveZeroes()); // 

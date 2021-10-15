@@ -463,4 +463,156 @@ var strStr = function(haystack, needle) {
 console.log(strStr()); // 
 console.log(strStr()); // 
 console.log(strStr()); // 
-// console.log(strStr()); // 
+// console.log(strStr()); //
+
+
+
+
+
+
+
+// 35. Search Insert Position
+// Given a sorted array of distinct integers and a target value, return the 
+// index if the target is found. If not, return the index where it would be 
+// if it were inserted in order. You must write an algorithm with O(log n) 
+// runtime complexity.
+
+var searchInsert = function(nums, target) {
+    let start = 0;
+    let end = nums.length - 1
+    while (start <= end) {
+        let mid = Math.floor((start+end)/2);
+        if (nums[mid] == target) {return mid}
+        else if (nums[mid] > target){
+            end = mid - 1;
+        } else {start = mid + 1}
+    } return start;
+};
+
+console.log(searchInsert([1,3,5,6], target = 5)); // 2
+console.log(searchInsert([1,3,5,6], target = 2)); // 1
+console.log(searchInsert([1,3,5,6], target = 7)); // 4
+console.log(searchInsert([1,3,5,6], target = 0)); // 0
+console.log(searchInsert([1], target = 0)); // 0
+// console.log(searchInsert()); // 
+
+
+
+// 88. Merge Sorted Array
+// You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and 
+// two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+// Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+// The final sorted array should not be returned by the function, but instead be stored inside 
+// the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements 
+// denote the elements that should be merged, and the last n elements are set to 0 and should 
+// be ignored. nums2 has a length of n.
+
+
+
+var merge = function(nums1, m, nums2, n) {
+    let len1 = nums1.length - m
+    for (let i=0; i<len1; i++){
+        nums1.pop()
+    }
+    for (let j=0; j<n; j++){
+        nums1.push(nums2[j])
+    }
+    return nums1.sort(function(a, b){return a - b});
+};
+
+
+console.log(merge(nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3)); // [1,2,2,3,5,6]
+console.log(merge(nums1 = [1], m = 1, nums2 = [], n = 0)); // [1]
+console.log(merge(nums1 = [0], m = 0, nums2 = [1], n = 1)); // [1]
+// console.log(merge()); // 
+
+
+
+// 541. Reverse String II WRONG!!!
+// Given a string s and an integer k, reverse the first k characters for 
+// every 2k characters counting from the start of the string.
+// If there are fewer than k characters left, reverse all of them. If 
+// there are less than 2k but greater than or equal to k characters, 
+// then reverse the first k characters and left the other as original.
+
+var reverseStringsHelper = function(s) {
+    let arr = s.split('');
+    let len = arr.length;
+    for(var i=0; i< len/2; i++){
+        let temp = arr[i];
+        arr[i] = arr[len-i-1];
+        arr[len-i-1] = temp;
+    }
+    s = arr.join('')
+    return s
+};
+
+var reverseStr = function(s, k) {
+    let beg = reverseStringsHelper(s.slice(0,k-1));
+    let end = s.slice(k, s.length-1);
+    s = beg.concat(end);
+    return s;
+};
+
+
+console.log(reverseStr(s = "abcdefg", k = 2)); // Output: "bacdfeg"
+console.log(reverseStr(s = "abcd", k = 2)); // Output: "bacd"
+// console.log(reverseStr()); // 
+
+
+
+
+
+// 557. Reverse Words in a String III
+// Given a string s, reverse the order of characters in each word within 
+// a sentence while still preserving whitespace and initial word order.
+
+var reverseStrings = function(s) {
+    let arr = s.split('');
+    let len = arr.length;
+    for(var i=0; i< len/2; i++){
+        let temp = arr[i];
+        arr[i] = arr[len-i-1];
+        arr[len-i-1] = temp;
+    }
+    s = arr.join('')
+    return s
+};
+
+var reverseWords = function(s) {
+    let arr = s.split(" ")
+    let len = arr.length;
+    for (let i=0; i<len; i++){
+        arr[i] = reverseStrings(arr[i])
+    }
+    s = arr.join(' ');
+    return s;
+};
+
+console.log(reverseWords(s = "Let's take LeetCode contest")); // Output: "s'teL ekat edoCteeL tsetnoc"
+console.log(reverseWords(s = "God Ding")); // Output: "doG gniD"
+// console.log(reverseWords()); // 
+
+
+
+
+
+
+
+// 344. Reverse String
+// Write a function that reverses a string. The input string is given as an array of characters s.
+
+var reverseString = function(s) {
+    let len = s.length;
+    for(var i=0; i< len/2; i++){
+        let temp = s[i];
+        s[i] = s[len-i-1];
+        s[len-i-1] = temp;
+    }
+    return s
+};
+
+
+console.log(reverseString(s = ["h","e","l","l","o"])); // Output: ["o","l","l","e","h"]
+console.log(reverseString(s = ["H","a","n","n","a","h"])); // Output: ["h","a","n","n","a","H"]
+// console.log(reverseString()); // 
