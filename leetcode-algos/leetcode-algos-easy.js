@@ -616,3 +616,61 @@ var reverseString = function(s) {
 console.log(reverseString(s = ["h","e","l","l","o"])); // Output: ["o","l","l","e","h"]
 console.log(reverseString(s = ["H","a","n","n","a","h"])); // Output: ["h","a","n","n","a","H"]
 // console.log(reverseString()); // 
+
+
+
+
+
+// 876. Middle of the Linked List
+// Given the head of a singly linked list, return the middle node of the linked list.
+// If there are two middle nodes, return the second middle node.
+
+/**
+ * Definition for singly-linked list. */
+function ListNode(val, next) {
+    this.val = (val===undefined ? 0 : val)
+    this.next = (next===undefined ? null : next)
+}
+/**
+ * @param {ListNode} head
+ * @return {ListNode}
+ */
+
+var middleNode = function(head) {
+    let A = [head];
+    while (A[A.length - 1].next != null)
+        A.push(A[A.length - 1].next);
+    return A[Math.floor(A.length / 2)];
+};
+
+console.log(middleNode(head = [1,2,3,4,5])); // Output: [3,4,5]
+console.log(middleNode(head = [1,2,3,4,5,6])); // Output: [4,5,6]
+// console.log(middleNode()); // 
+
+
+// 812. Largest Triangle Area
+// Given an array of points on the X-Y plane points where points[i] = [xi, yi], 
+// return the area of the largest triangle that can be formed by any three different 
+// points. Answers within 10-5 of the actual answer will be accepted.
+
+var largestTriangleArea = function (points) {
+    let max = 0
+    for (let i = 0; i < points.length - 2; i++) {
+        for (let j = i + 1; j < points.length - 1; j++) {
+            for (let k = j + 1; k < points.length; k++) {
+                max = Math.max(area(points[i], points[j], points[k]), max)
+            }
+        }
+    }
+    return max
+
+    function area([x1, y1], [x2, y2], [x3, y3]) {
+        return Math.abs(
+            x1 * (y2 - y3) + x2 * (y3 - y1)+ x3 * (y1 - y2)
+        ) / 2
+    }
+};
+
+console.log(largestTriangleArea(points = [[0,0],[0,1],[1,0],[0,2],[2,0]])); // Output: 2.00000
+console.log(largestTriangleArea(points = [[1,0],[0,0],[0,1]])); // 0.50000
+// console.log(largestTriangleArea()); // 

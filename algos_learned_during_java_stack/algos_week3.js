@@ -305,15 +305,15 @@ class DLList {
 var newDLL = new DLList();
 
 console.log(newDLL.size());
+newDLL.addHead(new DLLNode(3));
+newDLL.addHead(new DLLNode(5));
+newDLL.addHead(new DLLNode(6));
+newDLL.addHead(new DLLNode(9));
 
 newDLL.addHead(new DLLNode(1));
 console.log(newDLL.removeVal(1));
 console.log(newDLL.size());
 
-// newDLL.addHead(new DLLNode(3));
-// newDLL.addHead(new DLLNode(5));
-// newDLL.addHead(new DLLNode(6));
-// newDLL.addHead(new DLLNode(9));
 
 // console.log(newDLL.size());
 // console.log(newDLL.removeVal(2));
