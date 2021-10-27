@@ -101,7 +101,7 @@ console.log(existWordSearch([["A","B","C","E"],["S","F","C","S"],["A","D","E","E
 var findWordsWordSearch = function(board, words) {
     for (let row = 0; row < board.length; row++) {
         for (let col = 0; col < board[0].length; col++) {
-            for (let word = 0; wprd < board[0].length; col++) {
+            for (let word = 0; word < board[0].length; col++) {
                 if (board[row][col] == word[0]) {
                     if (snake2(board, word, row, col)) return true
                 }
@@ -318,3 +318,396 @@ var moveZeroes = function(nums) {
 console.log(moveZeroes(nums = [0,1,0,3,12])); // [1,3,12,0,0]
 console.log(moveZeroes(nums = [0])); // [0]
 // console.log(moveZeroes()); // 
+
+
+
+// 567. Permutation in String
+// Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+// In other words, return true if one of s1's permutations is the substring of s2.
+
+var permuteString = function(s) {
+    // let sArr = s.split('');
+    // let len = sArr.length;
+    // let permArray = [];
+    // for (let i=0; i<len-1; i++){
+    //     let sub = [sArr[]]
+    //     permArray.push(sub.join(''))
+    //     for (let j=0; j<len; j++){
+    //         permArray.push();
+    //     }
+
+    // }
+}
+
+var checkInclusion = function(s1, s2) {
+    let l = 0;
+    let r = 0;
+    let flag;
+    const count = new Map();
+    
+    for (const c of s1) {
+        count.set(c, count.get(c) + 1 || 1)
+    }
+    return count
+};
+
+console.log(checkInclusion(s1 = "ab", s2 = "eidbaooo")); // Output: true
+console.log(checkInclusion(s1 = "ab", s2 = "eidboaoo")); // Output: false
+// console.log(checkInclusion()); // 
+
+
+
+
+// 994. Rotting Oranges
+// You are given an m x n grid where each cell can have one of three values:
+
+// 0 representing an empty cell,
+// 1 representing a fresh orange, or
+// 2 representing a rotten orange.
+// Every minute, any fresh orange that is 4-directionally adjacent to a rotten 
+// orange becomes rotten.
+
+// Return the minimum number of minutes that must elapse until no cell has a 
+// fresh orange. If this is impossible, return -1.
+
+var orangesRotting = function (grid) {
+    
+    this.grid = grid;
+    this.height = grid.length;
+    this.width = grid[0].length;
+    var daysToRottenAll = 0;
+    var freshTurnedIntoRotten = true;
+    var codeOfRottenInPreviousRound = 2;//to keep track of rotten in each step.
+    
+    while (freshTurnedIntoRotten) {
+        
+        freshTurnedIntoRotten = false;
+        for (let r = 0; r < this.height; r++) {
+            for (let c = 0; c < this.width; c++) {
+                if (this.grid[r][c] === 1 && freshIsNeighbourToRotten(r, c, codeOfRottenInPreviousRound)) {
+                    this.grid[r][c] = codeOfRottenInPreviousRound + 1;
+                    freshTurnedIntoRotten = true;
+                }
+            }
+        }
+        
+        if (freshTurnedIntoRotten) {
+            codeOfRottenInPreviousRound++;
+            daysToRottenAll++;
+        }
+    }
+    return gridHasNoFreshOranges() ? daysToRottenAll : -1;
+};
+
+/**
+ * @param {number} r
+ * @param {number} c
+ * @param {number} codeOfRottenInPreviousRound
+ * @return {boolean}
+ */
+function freshIsNeighbourToRotten(r, c, codeOfRottenInPreviousRound) {
+    return (r - 1 >= 0 && this.grid[r - 1][c] === codeOfRottenInPreviousRound)
+    || (r + 1 < this.height && this.grid[r + 1][c] === codeOfRottenInPreviousRound)
+    || (c - 1 >= 0 && this.grid[r][c - 1] === codeOfRottenInPreviousRound)
+    || (c + 1 < this.width && this.grid[r][c + 1] === codeOfRottenInPreviousRound);
+}
+
+/**
+ * @return {boolean}
+ */
+function gridHasNoFreshOranges() {
+    for (let r = 0; r < this.height; r++) {
+        for (let c = 0; c < this.width; c++) {
+            if (this.grid[r][c] === 1) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+
+console.log(orangesRotting(grid = [[2,1,1],[1,1,0],[0,1,1]])); //  4
+console.log(orangesRotting(grid = [[2,1,1],[0,1,1],[1,0,1]])); // -1
+console.log(orangesRotting(grid = [[0,2]])); // 0
+// console.log(orangesRotting()); // 
+
+
+
+// 6. ZigZag Conversion
+// The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of 
+// rows like this: (you may want to display this pattern in a fixed font for better legibility)
+
+// P   A   H   N
+// A P L S I I G
+// Y   I   R
+// And then read line by line: "PAHNAPLSIIGYIR"
+
+// Write the code that will take a string and make this conversion given a number of rows:
+
+var convertZigZag = function(s, numRows) {
+    // let arr = s.split('');
+    // let str = s.concat(s[0], s[4], s[8], s[12])
+    // str = str.concat(s[1], s[3], s[5], s[7], s[9], s[11], s[13])
+    // str = str.concat(s[2], s[6], s[10])
+    var result = Array(numRows).fill('');
+    var step = 1, index = 0;
+    for(var i = 0; i < s.length; i++){
+        result[index] += s[i];
+        if(index === 0){
+            step = 1;
+        }else if(index === numRows - 1){
+            step = -1;
+        }
+        index += step;
+    }
+    return result.join('');
+};
+
+console.log(convertZigZag(s = "PAYPALISHIRING", numRows = 3)); // Output: "PAHNAPLSIIGYIR"
+console.log(convertZigZag(s = "PAYPALISHIRING", numRows = 4)); // Output: "PINALSIGYAHRPI"
+console.log(convertZigZag(s = "A", numRows = 1)); // Output: "A"
+// console.log(convertZigZag()); // 
+
+
+
+
+// 7. Reverse Integer
+// Given a signed 32-bit integer x, return x with its digits reversed. 
+// If reversing x causes the value to go outside the signed 32-bit integer 
+// range [-231, 231 - 1], then return 0.
+
+// Assume the environment does not allow you to store 64-bit integers (signed or unsigned).
+
+
+var reverseInt = function(x) {
+    let reversed =  parseInt(Math.abs(x).toString().split('').reverse().join('')) * Math.sign(x);
+    return (reversed <= 0x7fffffff && reversed >= -0x80000000) ? reversed : 0;
+};
+
+console.log(reverseInt(x = 123)); // 321
+console.log(reverseInt(x = -123)); // -321
+console.log(reverseInt(x = 120)); // 21
+console.log(reverseInt(x = -120)); // -21
+console.log(reverseInt(x = 0)); // 0
+// console.log(reverseInt()); // 
+
+
+
+
+// 8. String to Integer (atoi)
+// Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer 
+// (similar to C/C++'s atoi function).
+
+// The algorithm for myAtoi(string s) is as follows:
+
+// Read in and ignore any leading whitespace.
+// Check if the next character (if not already at the end of the string) is '-' or '+'. 
+// Read this character in if it is either. This determines if the final result is negative 
+// or positive respectively. Assume the result is positive if neither is present.
+// Read in next the characters until the next non-digit character or the end of the input 
+// is reached. The rest of the string is ignored.
+// Convert these digits into an integer (i.e. "123" -> 123, "0032" -> 32). If no digits were 
+// read, then the integer is 0. Change the sign as necessary (from step 2).
+// If the integer is out of the 32-bit signed integer range [-231, 231 - 1], then clamp the 
+// integer so that it remains in the range. Specifically, integers less than -231 should be 
+// clamped to -231, and integers greater than 231 - 1 should be clamped to 231 - 1.
+// Return the integer as the final result.
+// Note:
+
+// Only the space character ' ' is considered a whitespace character.
+// Do not ignore any characters other than the leading whitespace or the rest of the 
+// string after the digits.
+
+
+var myAtoi = function(str) {
+    var isNegative = undefined;
+    var hasStart = false;
+    var arr = [];
+    for (i = 0; i < str.length; i++) {
+        if (!hasStart) {
+            if (str[i] === " ") {
+                continue;
+            }
+            if (str[i] === "-") {
+                isNegative = true;
+                hasStart = true;
+                continue;
+            } else if (str[i] === "+") {
+                isNegative = false;
+                hasStart = true;
+                continue;
+            } else if (parseInt(str[i]) >= 0) {
+                if (isNegative === undefined) {
+                    isNegative = false;
+                    hasStart = true;
+                }
+                arr.push(str[i]);
+                continue;
+            }
+            return 0;
+        } else {
+		    // parseInt not Number(), because the latter will turn " " into 0.
+            if (parseInt(str[i]) >= 0) {
+                arr.push(str[i]);
+            } else {
+                break;
+            }
+        }
+    }
+    const num = Number(arr.join(""));
+    if (isNegative && num > Math.pow(2, 31)) {
+        return -Math.pow(2, 31);
+    }
+    if (!isNegative && num > Math.pow(2, 31) - 1) {
+        return Math.pow(2, 31) - 1;
+    }
+    return isNegative ? -num : num;
+};
+
+
+console.log(myAtoi(s = "42")); // Output: 42
+console.log(myAtoi(s = "   -42")); // Output: -42
+console.log(myAtoi(s = "4193 with words")); // Output: 4193
+console.log(myAtoi(s = "words and 987")); // Output: 0
+console.log(myAtoi(s = "-91283472332")); // Output: -2147483648
+// console.log(myAtoi()); // 
+
+
+// 12. Integer to Roman
+// Roman numerals are represented by seven different symbols: I, V, X, L, C, D and M.
+// Symbol       Value
+// I             1
+// V             5
+// X             10
+// L             50
+// C             100
+// D             500
+// M             1000
+// For example, 2 is written as II in Roman numeral, just two one's added together. 12 
+// is written as XII, which is simply X + II. The number 27 is written as XXVII, which 
+// is XX + V + II.
+// Roman numerals are usually written largest to smallest from left to right. However, 
+// the numeral for four is not IIII. Instead, the number four is written as IV. Because 
+// the one is before the five we subtract it making four. The same principle applies to 
+// the number nine, which is written as IX. There are six instances where subtraction is 
+// used:
+// I can be placed before V (5) and X (10) to make 4 and 9. 
+// X can be placed before L (50) and C (100) to make 40 and 90. 
+// C can be placed before D (500) and M (1000) to make 400 and 900.
+// Given an integer, convert it to a roman numeral.
+
+var intToRoman = function(num) {
+    let roman = ""
+    if (num/1000 >= 1){
+        roman += ("M").repeat(Math.floor(num/1000))
+        num %= 1000
+    }
+    if (num >= 900) {
+        roman += "CM"
+        num -= 900
+    }
+    if (num >= 500){
+        roman += "D"
+        num -= 500
+    }
+    if (num >= 400) {
+        roman += "CD"
+        num -= 400
+    }
+    if (num/100 >= 1){
+        roman += ("C").repeat(Math.floor(num/100))
+        num %= 100
+    }
+    if (num >= 90) {
+        roman += "XC"
+        num -= 90
+    }
+    if (num >= 50){
+        roman += "L"
+        num -= 50
+    }
+    if (num >= 40) {
+        roman += "XL"
+        num -= 40
+    }
+    if (num/10 >= 1){
+        roman += ("X").repeat(Math.floor(num/10))
+        num %= 10
+    }
+    if (num >= 9) {
+        roman += "IX"
+        num -= 9
+    }
+    if (num >= 5){
+        roman += "V"
+        num -= 5
+    }
+    if (num >= 4) {
+        roman += "IV"
+        num -= 4
+    }
+    if (num >= 1){
+        roman += ("I").repeat(Math.floor(num))
+    }
+    return roman;
+};
+
+
+// Short Version
+function intToRomanSV(num) {
+    const map = { M: 1000, CM: 900, D: 500, CD: 400, C: 100, XC: 90, L: 50, XL: 40, X: 10, IX: 9, V: 5, IV: 4, I: 1 };
+    let result = '';
+    Object.entries(map).forEach(([letter, n]) => {
+        result += letter.repeat(Math.floor(num / n));
+        num %= n;
+    });
+    return result;
+}
+
+console.log(intToRoman(num = 3)); // Output: "III"
+console.log(intToRoman(num = 4)); // Output: "IV"
+console.log(intToRoman(num = 9)); // Output: "IX"
+console.log(intToRoman(num = 20)); // Output: "XX"
+console.log(intToRoman(num = 58)); // Output: "LVIII"
+console.log(intToRoman(num = 1994)); // Output: "MCMXCIV"
+// console.log(intToRoman()); // 
+
+
+
+// 904. Fruit Into Baskets
+// You are visiting a farm that has a single row of fruit trees arranged from left to 
+// right. The trees are represented by an integer array fruits where fruits[i] is the 
+// type of fruit the ith tree produces.
+// You want to collect as much fruit as possible. However, the owner has some strict 
+// rules that you must follow:
+// You only have two baskets, and each basket can only hold a single type of fruit. 
+// There is no limit on the amount of fruit each basket can hold.
+// Starting from any tree of your choice, you must pick exactly one fruit from every 
+// tree (including the start tree) while moving to the right. The picked fruits must 
+// fit in one of your baskets.
+// Once you reach a tree with fruit that cannot fit in your baskets, you must stop.
+// Given the integer array fruits, return the maximum number of fruits you can pick.
+
+var totalFruit = function(fruits) {
+    let len = fruits.length;
+    let count1 = 1;
+    let count1Type = 0;
+    let count2 = 1;
+    let count2Type = 0;
+    let maxOutput = 0;
+    let tempCount = 1;
+    for (let i=0; i<len-1; i++){
+        tempCount = 1
+        for (let k=i+1; k<len; k++){
+            if (fruits[])
+        }
+    }
+
+};
+
+console.log(totalFruit(fruits = [1,2,1])); // Output: 3
+console.log(totalFruit(fruits = [0,1,2,2])); // Output: 3
+console.log(totalFruit(fruits = [1,2,3,2,2])); // Output: 4
+console.log(totalFruit(fruits = [3,3,3,1,2,1,1,2,3,3,4])); // Output: 5
+// console.log(totalFruit()); // 

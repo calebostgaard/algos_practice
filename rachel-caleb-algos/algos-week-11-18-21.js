@@ -18,11 +18,29 @@
 // pays, return true if you can provide every customer with correct change, 
 // or false otherwise.
 
+
 var lemonadeChange = function(bills) {
-
-
+    let i = 0, b5 = 0, b10 = 0;
+    let len = bills.length
+    while (i<len && b5>=0 && b10>=0){
+        if (bills[i] == 5){
+            b5++
+        } else if (bills[i] == 10){
+            b10++;
+            b5--;
+        } else {
+            if (b10 !== 0){
+                b10--;
+                b5--;
+            } else {
+                b5-=3;
+            }
+        }
+        i++;
+    }
+    if (b5<0 || b10<0) {return false}
+    return true
 };
-
 
 console.log(lemonadeChange(bills = [5,5,5,10,20])); // Output: true
 console.log(lemonadeChange(bills = [5,5,10,10,20])); // Output: false

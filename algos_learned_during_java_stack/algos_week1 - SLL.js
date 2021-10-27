@@ -38,7 +38,7 @@ class SLL {
 
         var runnerFast = this.head;
         var runnerSlow = this.head;
-        var counter = 0;
+        var count = 0;
 
         while(runnerFast){
             if(count >= n){
@@ -60,7 +60,7 @@ class SLL {
     // output: head -> (3) -> (2) -> (1) ->
     reverse() {
         var prev = null;
-        var curent = this.head;
+        var current = this.head;
         var next = null;
         while(current){
             next = current.next;
@@ -70,7 +70,7 @@ class SLL {
         }
         this.head = prev;
     }
-
+ 
 
     // if val is contained within the current list, delete it.
     // return void

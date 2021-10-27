@@ -68,3 +68,64 @@ console.log(isMatch(s = "ab", p = ".*")); // true
 console.log(isMatch(s = "aab", p = "c*a*b")); // true
 console.log(isMatch(s = "mississippi", p = "mis*is*p*.")); // false
 // console.log(isMatch()); //
+
+
+
+// 273. Integer to English Words
+// Convert a non-negative integer num to its English words representation.
+
+var numberToWords = function(num) {
+    let result = [];
+    const numDic = { 0:"Zero", 1:"One", 2:"Two", 3:"Three", 4:"Four", 5:"Five", 6:"Six", 7:"Seven", 8:"Eight", 9:"Nine",
+    10:"Ten", 11:"Eleven", 12:"Twelve", 13:"Thirteen", 14:"Fourteen", 15:"Fifteen", 16:"Sixteen", 17:"Seventeen", 18:"Eighteen", 19:"Nineteen",
+    20:"Twenty", 30:"Thirty", 40:"Forty", 50:"Fifty", 60:"Sixty", 70:"Seventy", 80:"Eighty", 90:"Ninety" };
+    var blockNums = ["Hundred", "Thousand", "Million", "Billion"];
+    var left;
+    var divider = 1000000000;
+    var current;
+    var index = 4;
+    
+    if (num === 0) {
+        return numDic[0];
+    }
+    
+    while (num > 0) {
+        index--;
+        current = (num / divider) >> 0;
+        num %= divider;
+        divider /= 1000;
+        if (current === 0) {
+            continue;
+        }
+        left = current;
+        
+        if (left >= 100) {
+            result.push(numDic[(left / 100) >> 0], blockNums[0]);
+            left %= 100;
+        } 
+
+        if (left > 9) {
+            if (left < 20) {
+                result.push(numDic[left]);
+                left = 0;
+            } else {
+                result.push(numDic[left - (left %= 10)]);
+            }
+        }
+
+        if (left > 0) {
+            result.push(numDic[left]);
+        }
+
+        if (current > 0 && index !== 0) {
+            result.push(blockNums[index]);
+        }
+    }
+    return result.join(" ");
+};
+
+console.log(numberToWords(num = 123)); // Output: "One Hundred Twenty Three"
+console.log(numberToWords(num = 12345)); // Output: "Twelve Thousand Three Hundred Forty Five"
+console.log(numberToWords(num = 1234567)); // Output: "One Million Two Hundred Thirty Four Thousand Five Hundred Sixty Seven"
+console.log(numberToWords(num = 1234567891)); // Output: "One Billion Two Hundred Thirty Four Million Five Hundred Sixty Seven Thousand Eight Hundred Ninety One"
+// console.log(numberToWords()); //

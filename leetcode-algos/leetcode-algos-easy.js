@@ -674,3 +674,288 @@ var largestTriangleArea = function (points) {
 console.log(largestTriangleArea(points = [[0,0],[0,1],[1,0],[0,2],[2,0]])); // Output: 2.00000
 console.log(largestTriangleArea(points = [[1,0],[0,0],[0,1]])); // 0.50000
 // console.log(largestTriangleArea()); // 
+
+
+
+// 733. Flood Fill
+// An image is represented by an m x n integer grid image where image[i][j]
+//  represents the pixel value of the image.
+
+// You are also given three integers sr, sc, and newColor. You should perform
+//  a flood fill on the image starting from the pixel image[sr][sc].
+
+// To perform a flood fill, consider the starting pixel, plus any pixels 
+// connected 4-directionally to the starting pixel of the same color as the 
+// starting pixel, plus any pixels connected 4-directionally to those pixels 
+// (also with the same color), and so on. Replace the color of all of the 
+// aforementioned pixels with newColor.
+
+// Return the modified image after performing the flood fill.
+
+var fillColor = function(image, sr, sc, color, newColor){
+    if (image[sr][sc] == color){
+        image[sr][sc] = newColor;
+        if (sr >= 1) fillColor(image, sr-1, sc, color, newColor);
+        if (sc >= 1) fillColor(image, sr, sc-1, color, newColor);
+        if (sr+1 < image.length) fillColor(image, sr+1, sc, color, newColor);
+        if (sc+1 < image[0].length) fillColor(image, sr, sc+1, color, newColor);
+    }
+}
+
+var floodFill = function(image, sr, sc, newColor) {
+    let color = image[sr][sc];
+    if (color != newColor){
+        fillColor(image, sr, sc, color, newColor);
+    }
+    return image;
+};
+console.log(floodFill(image = [[1,1,1],[1,1,0],[1,0,1]], sr = 1, sc = 1, newColor = 2)); // Output: [[2,2,2],[2,2,0],[2,0,1]]
+console.log(floodFill(image = [[0,0,0],[0,0,0]], sr = 0, sc = 0, newColor = 2)); // Output: [[2,2,2],[2,2,2]]
+// console.log(floodFill()); // 
+
+
+
+
+
+// 292. Nim Game
+
+// You are playing the following Nim Game with your friend:
+
+// Initially, there is a heap of stones on the table.
+// You and your friend will alternate taking turns, and you go first.
+// On each turn, the person whose turn it is will remove 1 to 3 stones from the heap.
+// The one who removes the last stone is the winner.
+
+// Given n, the number of stones in the heap, return true if you can win the game 
+// assuming both you and your friend play optimally, otherwise return false.
+
+var canWinNim = function(n) {
+    return (n % 4 !== 0);
+};
+
+
+console.log(canWinNim(n = 4)); // false
+console.log(canWinNim(n = 1)); // true
+console.log(canWinNim(n = 2)); // true
+// console.log(canWinNim()); // 
+
+
+
+
+
+
+// 1025. Divisor Game
+
+// Alice and Bob take turns playing a game, with Alice starting first.
+
+// Initially, there is a number n on the chalkboard. On each player's 
+// turn, that player makes a move consisting of:
+
+// Choosing any x with 0 < x < n and n % x == 0.
+// Replacing the number n on the chalkboard with n - x.
+// Also, if a player cannot make a move, they lose the game.
+
+// Return true if and only if Alice wins the game, assuming both players play optimally.
+
+var divisorGame = function(n) {
+    return !(n%2)
+};
+
+console.log(divisorGame(n = 2)); // true
+console.log(divisorGame(n = 3)); // false
+// console.log(divisorGame()); // 
+
+
+
+
+// 2042. Check if Numbers Are Ascending in a Sentence
+
+// A sentence is a list of tokens separated by a single space with no leading or 
+// trailing spaces. Every token is either a positive number consisting of digits 
+// 0-9 with no leading zeros, or a word consisting of lowercase English letters.
+
+// For example, "a puppy has 2 eyes 4 legs" is a sentence with seven tokens: "2" 
+// and "4" are numbers and the other tokens such as "puppy" are words.
+// Given a string s representing a sentence, you need to check if all the numbers 
+// in s are strictly increasing from left to right (i.e., other than the last number,
+//      each number is strictly smaller than the number on its right in s).
+
+// Return true if so, or false otherwise.
+
+
+var areNumbersAscending = function(str) {
+    let arr = str.split(' ');
+    let arrNum = []
+    let len = arr.length
+    for (i = 0; i < len; i++) {
+        if (parseInt(arr[i]) >= 0) {
+            arrNum.push(parseInt(arr[i]));
+        }
+    }
+    len = arrNum.length
+    for (i = 0; i < len-1; i++) {
+        if (arrNum[i+1] <= arrNum[i]){
+            return false
+        }
+    }
+    return true;
+};
+
+console.log(areNumbersAscending(s = "1 box has 3 blue 4 red 6 green and 12 yellow marbles")); // Output: true
+console.log(areNumbersAscending(s = "hello world 5 x 5")); // Output: false
+console.log(areNumbersAscending(s = "sunset is at 7 51 pm overnight lows will be in the low 50 and 60 s")); // Output: false
+console.log(areNumbersAscending(s = "4 5 11 26")); // Output: true
+// console.log(areNumbersAscending()); // 
+
+
+
+
+// 1859. Sorting the Sentence
+
+// A sentence is a list of words that are separated by a single space with no 
+// leading or trailing spaces. Each word consists of lowercase and uppercase English letters.
+
+// A sentence can be shuffled by appending the 1-indexed word position to each
+//  word then rearranging the words in the sentence.
+
+// For example, the sentence "This is a sentence" can be shuffled as "sentence4 
+// a3 is2 This1" or "is2 sentence4 This1 a3".
+// Given a shuffled sentence s containing no more than 9 words, reconstruct and 
+// return the original sentence.
+
+
+var sortSentence = function(s) {
+    let sorted = [];
+    for (let str of s.split(" ") ) {
+        let index = str[str.length - 1] - 1;
+        sorted[index] = str.slice(0, str.length - 1);
+    }
+    return sorted.join(" ");
+};
+
+console.log(sortSentence(s = "is2 sentence4 This1 a3")); // Output: "This is a sentence"
+console.log(sortSentence(s = "Myself2 Me1 I4 and3")); // Output: "Me Myself and I"
+// console.log(sortSentence()); // 
+
+
+
+// 929. Unique Email Addresses
+// // Every valid email consists of a local name and a domain name, separated by the '@' sign. 
+// Besides lowercase letters, the email may contain one or more '.' or '+'.
+// // For example, in "alice@leetcode.com", "alice" is the local name, and "leetcode.com" is the 
+// domain name.
+// // If you add periods '.' between some characters in the local name part of an email address, 
+// mail sent there will be forwarded to the same address without dots in the local name. Note 
+// that this rule does not apply to domain names.
+// // For example, "alice.z@leetcode.com" and "alicez@leetcode.com" forward to the same email address.
+// // If you add a plus '+' in the local name, everything after the first plus sign will be ignored. 
+// This allows certain emails to be filtered. Note that this rule does not apply to domain names.
+// // For example, "m.y+name@email.com" will be forwarded to "my@email.com".
+// // It is possible to use both of these rules at the same time.
+// // Given an array of strings emails where we send one email to each email[i], return the number 
+// of different addresses that actually receive mails.
+
+
+
+
+var numUniqueEmails = function(emails) {
+    let len = emails.length;
+    let email = "";
+    let newEm = ""
+    let indexAt = 0;
+    let indexPer = 0;
+    let indexPlus = 0;
+
+    for (let i=0; i<len; i++){
+        email = emails[i];
+        indexAt = emails[i].indexOf("@")
+        indexPer = emails[i].indexOf(".")
+        indexPlus = emails[i].indexOf("+")
+        while(indexPlus > 0 && indexPlus < indexAt){
+            indexPlus = email.indexOf("+")
+            newEm = emails[i].substr(0, indexPlus) + emails[i].substr(indexAt, email.length-1)
+            emails[i] = newEm
+            indexAt = emails[i].indexOf("@")
+            indexPlus = emails[i].indexOf("+")
+        }
+        while(indexPer > 0 && indexPer < indexAt){
+            // indexPer = email.indexOf(".")
+            newEm = emails[i].substr(0, indexPer) + emails[i].substr(indexPer+1, email.length-1)
+            emails[i] = newEm
+            indexAt = emails[i].indexOf("@")
+            indexPer = emails[i].indexOf(".")
+        }
+    }
+    let uniqueCount = 0;
+    let unique = false;
+    for (let i=0; i<len-1; i++){
+        unique = true;
+        for (let k=i+1; k<len; k++){
+            if (emails[i] == emails[k]) {unique = false}
+        }
+        if (unique) uniqueCount++
+    } uniqueCount++
+
+    return uniqueCount;
+};
+
+console.log(numUniqueEmails(emails = ["test.email+alex@leetcode.com","test.e.mail+bob.cathy@leetcode.com","testemail+david@lee.tcode.com"])); // Output: 2
+console.log(numUniqueEmails(emails = ["a@leetcode.com","b@leetcode.com","c@leetcode.com"])); // Output : 3
+// console.log(numUniqueEmails()); // 
+
+
+// 53. Maximum Subarray
+// Given an integer array nums, find the contiguous subarray (containing at least one number) 
+// which has the largest sum and return its sum.
+
+// A subarray is a contiguous part of an array.
+
+var maxSubArray = function(nums) {
+    let len = nums.length
+    let max = nums[0];
+    if (len == 1) {return nums[0]};
+    for (var j=0; j<len; j++){
+        let tempSum = nums[j];
+        if (tempSum > max) {
+            max = tempSum
+        }
+        for (var i=j+1; i<len; i++){
+            tempSum += nums[i]
+            if (tempSum > max) {
+                max = tempSum
+            }
+        }
+    } 
+    return (nums[len-1] > max) ? nums[len-1] : max
+};
+console.log(maxSubArray(nums = [-2,1,-3,4,-1,2,1,-5,4])); // Output: 6
+console.log(maxSubArray(nums = [1])); // Output: 1
+console.log(maxSubArray(nums = [5,4,-1,7,8])); // Output: 23
+// console.log(maxSubArray()); // Output: 
+
+
+
+
+// 66. Plus One
+// You are given a large integer represented as an integer array digits, where each 
+// digits[i] is the ith digit of the integer. The digits are ordered from most 
+// significant to least significant in left-to-right order. The large integer does 
+// not contain any leading 0's.
+
+// Increment the large integer by one and return the resulting array of digits.
+
+
+var plusOne = function(digits) {
+    console.log(parseInt(digits.join('')))
+    let result = parseInt(digits.join('')) + 1;
+    console.log(result)
+    digits = result.toString().split("");
+    return digits
+};
+
+// console.log(plusOne(digits = [1,2,3])); // Output: [1,2,4]
+// console.log(plusOne(digits = [4,3,2,1])); // Output: [4,3,2,2]
+// console.log(plusOne(digits = [0])); // Output: [1]
+// console.log(plusOne(digits = [9])); // Output: [1,0]
+console.log(plusOne([6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,3])); // Output: [6,1,4,5,3,9,0,1,9,5,1,8,6,7,0,5,5,4,4]
+// console.log(plusOne()); // Output: 
